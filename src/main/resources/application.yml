@@ -3,10 +3,10 @@ spring:
     active: dev
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    data-username: root
-    data-password: Ll123456?
-    url: jdbc:mysql://www.safewind.cn:3306/book
+    url: jdbc:mysql://127.0.0.1:3306/book
+    username: root
+    password: 19970211
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true

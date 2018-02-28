@@ -4,8 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.DateTimeException;
 import java.util.Date;
+
+//import javax.persistence.Table;
+//import java.time.DateTimeException;
 
 /**
  * Created by lxy_x on 2018/2/27.
@@ -13,9 +15,9 @@ import java.util.Date;
 @Table(name="system_book")
 @Entity
 public class Book {
-    @Id
+   @Id
     @GeneratedValue
-    private String bookId;
+    private int bookId;
     private String bookName;
     private String bookStyle;
     private String bookAuthor;
@@ -27,11 +29,11 @@ public class Book {
     public Book() {
     }
 
-    public String getBookId() {
+    public int getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(int bookId) {
         this.bookId = bookId;
     }
 
