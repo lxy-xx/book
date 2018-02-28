@@ -1,9 +1,6 @@
 package com.safewind.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 //import javax.persistence.Table;
@@ -18,13 +15,13 @@ public class Book {
    @Id
     @GeneratedValue
     private int bookId;
-    private String bookName;
+    @Column(nullable = false) private String bookName;
     private String bookStyle;
-    private String bookAuthor;
+    @Column(nullable = false) private String bookAuthor;
     private String bookPub;
     private Date bookPubDate;
-    private Date bookInDate;
-    private String isBorrowed;
+    @Column(nullable = false) private Date bookInDate;
+    @Column(nullable = false) private String isBorrowed;
 
     public Book() {
     }
