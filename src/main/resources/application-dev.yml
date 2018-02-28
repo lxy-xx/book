@@ -1,0 +1,10 @@
+server:
+  port: 8082
+  context-path: /book
+
+A: 123
+B: "A is ${A}"
+
+book:
+  name: "magic"
+  cost: 16
