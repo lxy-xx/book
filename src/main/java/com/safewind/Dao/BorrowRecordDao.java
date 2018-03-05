@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 
 public interface BorrowRecordDao extends JpaRepository<BorrowRecord,BorrowRecord.BorrowRecordPK> {
+    BorrowRecord findByReaderIdAndBookId(int readerId,int bookId);
 }

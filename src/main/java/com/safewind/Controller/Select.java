@@ -2,6 +2,7 @@ package com.safewind.Controller;
 
 import com.safewind.Dao.ManagerDao;
 import com.safewind.Dao.ReaderDao;
+import com.safewind.model.Book;
 import com.safewind.model.Manager;
 import com.safewind.model.Reader;
 import org.springframework.beans.factory.annotation.Autowired;

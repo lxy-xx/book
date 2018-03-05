@@ -8,15 +8,41 @@ import java.util.Date;
  */
 @Table(name="reader_fee")
 @Entity
+@IdClass(ReaderFee.ReaderFeePK.class)
 public class ReaderFee {
-    @Id
-    @GeneratedValue
-    private int bookId;
+    @Id private Date borrowDate;
+    @Id private int bookId;
     @Column(nullable = false) private int readerId;
     @Column(nullable = false) private String readerName;
     @Column(nullable = false) private String bookName;
-    @Column(nullable = false) private float bookFee;
-    @Column(nullable = false) private Date borrowDate;
+    @Column(nullable = false) private int bookFee;
+
+
+    public static class ReaderFeePK{
+        @Column(nullable = false) private int bookId;
+        @Column(nullable=false) private Date borrowDate;
+
+        public ReaderFeePK(int bookId, Date borrowDate) {
+            this.bookId = bookId;
+            this.borrowDate = borrowDate;
+        }
+
+        public int getBookId() {
+            return bookId;
+        }
+
+        public void setBookId(int bookId) {
+            this.bookId = bookId;
+        }
+
+        public Date getBorrowDate() {
+            return borrowDate;
+        }
+
+        public void setBorrowDate(Date borrowDate) {
+            this.borrowDate = borrowDate;
+        }
+    }
 
     public ReaderFee() {
     }
@@ -53,11 +79,11 @@ public class ReaderFee {
         this.bookName = bookName;
     }
 
-    public float getBookFee() {
+    public int getBookFee() {
         return bookFee;
     }
 
-    public void setBookFee(float bookFee) {
+    public void setBookFee(int bookFee) {
         this.bookFee = bookFee;
     }
 

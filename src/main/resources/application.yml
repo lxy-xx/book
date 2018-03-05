@@ -3,10 +3,12 @@ spring:
     active: dev
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/book
+    url: jdbc:mysql://www.safewind.cn:3306/book
     username: root
-    password: 19970211
+    password: Ll123456?
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+borderTime: 2592000000 #3600*1000*24*30
+Fee: 50 #罚款50
