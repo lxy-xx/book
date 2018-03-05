@@ -22,7 +22,7 @@ public class Register {
     InExistence inExistence;
     @PostMapping(value = "readerRegister")//新增借阅者
     public String readerRegister(Reader reader){
-      if(false==inExistence.exit(reader.getReaderName()))
+      if(false==inExistence.exist(reader.getReaderName()))
           return "该用户已经存在！";//失败界面
       else{
           readerDao.save(reader);
@@ -31,7 +31,7 @@ public class Register {
     }
     @PostMapping(value="managerRegister")//新增管理员
     public String managerRegister(Manager manager){
-        if(false==inExistence.managerExit(manager.getManagerId()))
+        if(false==inExistence.managerExist(manager.getManagerId()))
             return "";//失败界面
         else {
             managerDao.save(manager);

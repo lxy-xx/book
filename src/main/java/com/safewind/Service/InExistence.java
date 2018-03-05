@@ -1,7 +1,9 @@
 package com.safewind.Service;
 
+import com.safewind.Dao.BookDao;
 import com.safewind.Dao.ManagerDao;
 import com.safewind.Dao.ReaderDao;
+import com.safewind.model.Book;
 import com.safewind.model.Manager;
 import com.safewind.model.Reader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,9 @@ public class InExistence {
     ReaderDao readerDao;
     @Autowired
     ManagerDao managerDao;
-    public boolean exit(String name){
+    @Autowired
+    BookDao bookDao;
+    public boolean exist(String name){
         List readerList = readerDao.findByReaderName(name);
         if(0!=readerList.size())
             return false;
@@ -32,7 +36,7 @@ public class InExistence {
      * @param Id
      * @return
      */
-    public boolean readerExit(int Id){
+    public boolean readerExist(int Id){
         Reader reader=null;
         reader=readerDao.findByReaderId(Id);
         if(null==reader)
@@ -60,7 +64,7 @@ public class InExistence {
      * @param Id
      * @return
      */
-    public boolean managerExit(int Id){
+    public boolean managerExist(int Id){
         Manager manager = null;
         manager=managerDao.findByManagerId(Id);
         if(null!=manager)
@@ -68,4 +72,14 @@ public class InExistence {
         else
             return true;
     }
+//    public boolean bookExist(int Id){
+//        Book book=null;
+//        book=bookDao.findByBookID(Id);
+//        if(book==null){
+//            return  false;
+//
+//        }else {
+//            return  true;
+//        }
+//    }
 }
