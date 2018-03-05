@@ -1,5 +1,6 @@
 package com.safewind.Controller;
 
+import com.safewind.Dao.BookDao;
 import com.safewind.Dao.ManagerDao;
 import com.safewind.Dao.ReaderDao;
 import com.safewind.model.Book;
@@ -19,33 +20,45 @@ public class Select {
     private ReaderDao readerDao;
     @Autowired
     private ManagerDao managerDao;
-    @RequestMapping(value="checkAllReader")//查询所有借阅者
-    public List<Reader> checkAllReader(){
-        List<Reader> readerList= readerDao.findAll();
-        for(Reader reader : readerList){
+    @Autowired
+    private BookDao bookDao;
+
+    @RequestMapping(value = "checkAllReader")//查询所有借阅者
+    public List<Reader> checkAllReader() {
+        List<Reader> readerList = readerDao.findAll();
+        for (Reader reader : readerList) {
             reader.setPassword(null);
         }
         return readerList;
     }
-    @RequestMapping(value="checkAllManager")//查询所有管理员
+
+    @RequestMapping(value = "checkAllManager")//查询所有管理员
     public List<Manager> checkAllManager() {
-        List<Manager> managerList=managerDao.findAll();
-        for(Manager manager :managerList){
+        List<Manager> managerList = managerDao.findAll();
+        for (Manager manager : managerList) {
             manager.setPassword(null);
         }
         return managerList;
     }
-    @GetMapping(value="selectReader")
-    public Reader selectReader(@RequestParam("id") int id){
-        Reader reader =readerDao.findByReaderId(id);
+
+    @GetMapping(value = "selectReader")
+    public Reader selectReader(@RequestParam("id") int id) {
+        Reader reader = readerDao.findByReaderId(id);
         reader.setPassword(null);
         return reader;
     }
 
-    @GetMapping(value="selectManager")
-    public Manager selectManager(@RequestParam("id") int id){
+    @GetMapping(value = "selectManager")
+    public Manager selectManager(@RequestParam("id") int id) {
         Manager manager = managerDao.findByManagerId(id);
         manager.setPassword(null);
         return manager;
+    }
+
+    @GetMapping(value = "selectBook")
+    public Book selectBook(@RequestParam("id") int id) {
+        Book book = bookDao.findByBookID(id);
+        return book;
+
     }
 }
