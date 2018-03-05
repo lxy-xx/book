@@ -1,6 +1,7 @@
 package com.safewind.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -18,7 +19,7 @@ public class ReaderFee {
     @Column(nullable = false) private int bookFee;
 
 
-    public static class ReaderFeePK{
+    public static class ReaderFeePK implements Serializable{
         @Column(nullable = false) private int bookId;
         @Column(nullable=false) private Date borrowDate;
 
