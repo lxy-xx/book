@@ -29,7 +29,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-4">
-            <h2>图书入库</h2>
+            <h2>新增借阅者</h2>
         </div>
     </div>
     <br/>
@@ -38,13 +38,13 @@
         <div class="col-xs-6">
             <div class="input-group input-group-lg">
                 <span class="input-group-addon">读者姓名</span>
-                <input type="text" class="form-control" placeholder="请输入读者姓名">
+                <input id="readerName" type="text" class="form-control" placeholder="请输入读者姓名">
             </div>
         </div>
         <div class="col-xs-6">
             <div class="input-group input-group-lg">
                 <span class="input-group-addon">读者性别</span>
-                <input type="text" class="form-control" placeholder="请输入读者性别">
+                <input id="readerSex" type="text" class="form-control" placeholder="请输入读者性别">
             </div>
         </div>
     </div>
@@ -53,13 +53,13 @@
         <div class="col-xs-6">
             <div class="input-group input-group-lg">
                 <span class="input-group-addon">读者类型</span>
-                <input type="text" class="form-control" placeholder="请输入读者类型">
+                <input id="readerType" type="text" class="form-control" placeholder="请输入读者类型">
             </div>
         </div>
         <div class="col-xs-6">
             <div class="input-group input-group-lg">
                 <span class="input-group-addon">初始密码</span>
-                <input type="password" class="form-control" placeholder="请输入初始密码">
+                <input id="password" type="password" class="form-control" placeholder="请输入初始密码">
             </div>
         </div>
     </div>
@@ -67,11 +67,33 @@
     <div class="row">
         
         <div class="col-xs-12">
-            <button class="btn btn-primary btn-lg pull-right">提交</button>
+            <button class="btn btn-primary btn-lg pull-right" id="submitTry">提交</button>
         </div>
     </div>
 </div>
 
+<div class="modal fade" id="result" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    提交结果
+                </h4>
+            </div>
+            <div class="modal-body" id="content">
+                在这里添加一些文本
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 
 <script type="text/javascript" src="./js/jquery-1.11.0.min.js"></script>
@@ -105,6 +127,48 @@
                       "sSortDescending": ": 以降序排列此列"  
                   }  
               }  
+        });
+        $("#submitTry").click(function(event) {
+
+            var readerName = $.trim($("#readerName").val());
+            var readerSex = $.trim($("#readerSex").val());
+            var readerType = $.trim($("#readerType").val());
+            var password = $("#password").val();
+
+
+            if(readerName==""){
+                $("#content").html("读者名称不能为空");
+            }else if(readerSex==""){
+                $("#content").html("读者性别不能为空");
+            }else if(readerType==""){
+                $("#content").html("读者类型不能为空");
+            }else if(password==""){
+                $("#content").html("初始密码不能为空");
+            }else {
+                $.ajax({
+                    url: './readerRegister',
+                    type: 'POST',
+                    data:{
+                        readerName:readerName,
+                        readerSex:readerSex,
+                        readerType:readerType,
+                        password:password,
+                    }
+                })
+                    .done(function (data) {
+                        $("#content").html(data);
+                        console.log(data);
+                    })
+                    .fail(function () {
+                        $("#content").html("网络环境问题，交互失败");
+                        console.log("error");
+                    })
+                    .always(function () {
+                        console.log("complete");
+                    });
+            }
+
+            $('#result').modal('show');
         });
     });
 </script>
