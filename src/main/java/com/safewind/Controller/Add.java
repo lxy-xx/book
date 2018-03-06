@@ -17,6 +17,7 @@ public class Add {
     private BookDao bookDao;
     @PostMapping(value = "bookAdd")//图书入库
     public String bookAdd(Book book){
+        System.out.println(book);
         book.setBookInDate(new Date());
         book.setIsBorrowed("未借");
         bookDao.save(book);

@@ -78,6 +78,20 @@ public class Book {
         return bookInDate;
     }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", bookName='" + bookName + '\'' +
+                ", bookStyle='" + bookStyle + '\'' +
+                ", bookAuthor='" + bookAuthor + '\'' +
+                ", bookPub='" + bookPub + '\'' +
+                ", bookPubDate=" + bookPubDate +
+                ", bookInDate=" + bookInDate +
+                ", isBorrowed='" + isBorrowed + '\'' +
+                '}';
+    }
+
     public void setBookInDate(Date bookInDate) {
         this.bookInDate = bookInDate;
     }
