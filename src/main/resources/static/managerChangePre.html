@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图书管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" href="./img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/jquery.dataTables.min.css">
+    <style>
+        body{
+          background:#fff url('./img/background.jpg') no-repeat left top;
+          background-size:100%;
+        }
+        .container{
+            background-color:rgba(255,255,255,0.3);
+            border-radius: 15px;
+            /*color: white;*/
+            margin-top: 100px;
+            padding: 15px;
+        }
+        tbody{
+            background-color:rgba(255,255,255,1);
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript" src="./js/head.js"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div >
+                <table id="bookTable" class="table table-bordered table-hover table-control"> 
+                    <thead> 
+                     <tr> 
+                      <th width="10%">书籍编号</th> 
+                      <th width="15%">书籍名称</th> 
+                      <th width="10%">书籍类别</th> 
+                      <th width="10%">书籍作者</th>
+                      <th width="15%">出版社名称</th>
+                      <th width="10%">出版日期</th>
+                      <th width="10%">登记日期</th>
+                      <th width="10%">是否被借出</th>
+                      <th width="10%">操作</th>
+                     </tr> 
+                    </thead> 
+                    <tbody>
+                        <tr> 
+                          <th>123</th> 
+                          <th>13</th> 
+                          <th>456</th> 
+                          <th>768</th>
+                          <th>3154.4</th>
+                          <th>123</th>
+                          <th></th>
+                          <th></th>
+                          <th width="10%"><button class="btn btn-primary">借书</button></th>
+                        </tr> 
+                        <tr> 
+                          <th>123</th> 
+                          <th>13</th> 
+                          <th>456</th> 
+                          <th>768</th>
+                          <th>3154.4</th>
+                          <th>123</th>
+                          <th></th>
+                          <th></th>
+                          <th><button class="btn btn-primary" disabled="disabled">借书</button></th>
+                        </tr> 
+                        <tr> 
+                          <th>123</th> 
+                          <th>13</th> 
+                          <th>456</th> 
+                          <th>768</th>
+                          <th>3154.4</th>
+                          <th>123</th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                        </tr> 
+
+                    </tbody> 
+                    <tfoot> 
+                     <tr> 
+                      <th>书籍编号</th> 
+                      <th>书籍名称</th> 
+                      <th>书籍类别</th> 
+                      <th>书籍作者</th>
+                      <th>出版社名称</th>
+                      <th>出版日期</th>
+                      <th>登记日期</th>
+                      <th>是否被借出</th>
+                      <th>操作</th>
+                     </tr> 
+                    </tfoot> 
+                    <!-- tbody是必须的 --> 
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="./js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="./js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("table").DataTable({
+              language: {  
+                  "sProcessing": "处理中...",  
+                  "sLengthMenu": "显示 _MENU_ 项结果",  
+                  "sZeroRecords": "没有匹配结果",  
+                  "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",  
+                  "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",  
+                  "sInfoFiltered": "(由 _MAX_ 项结果过滤)",  
+                  "sInfoPostFix": "",  
+                  "sSearch": "搜索:",  
+                  "sUrl": "",  
+                  "sEmptyTable": "表中数据为空",  
+                  "sLoadingRecords": "载入中...",  
+                  "sInfoThousands": ",",  
+                  "oPaginate": {  
+                      "sFirst": "首页",  
+                      "sPrevious": "上页",  
+                      "sNext": "下页",  
+                      "sLast": "末页"  
+                  },  
+                  "oAria": {  
+                      "sSortAscending": ": 以升序排列此列",  
+                      "sSortDescending": ": 以降序排列此列"  
+                  }  
+              }  
+        });
+    });
+</script>
+</body>
+</html>

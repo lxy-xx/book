@@ -7,6 +7,7 @@ import com.safewind.Dao.ReturnRecordDao;
 import com.safewind.Service.Fine;
 import com.safewind.model.Book;
 import com.safewind.model.BorrowRecord;
+import com.safewind.model.Reader;
 import com.safewind.model.ReturnRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
@@ -30,7 +32,8 @@ public class BorrowAndReturn {
     private long borderTime;
     @GetMapping(value="borrowBook")
     public String borrow(@RequestParam("bookId") int bookId,
-                             @RequestParam("readerId") int readerId){
+                         HttpSession session ){
+        int readerId = ((Reader)session.getAttribute("")).getReaderId();
         //添加借书记录
         BorrowRecord borrowRecord =new BorrowRecord();
         borrowRecord.setBookId(bookId);
@@ -45,7 +48,8 @@ public class BorrowAndReturn {
     }
     @GetMapping(value="returnBook")
     public String returnBook(@RequestParam("bookId") int bookId,
-                             @RequestParam("readerId") int readerId){
+                             HttpSession session ){
+        int readerId = ((Reader)session.getAttribute("")).getReaderId();
         //添加还书记录
         ReturnRecord returnRecord = new ReturnRecord();
         returnRecord.setReaderId(bookId);

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * Created by qt on 2018/3/5.
  */
@@ -15,10 +17,10 @@ public class Add {
     private BookDao bookDao;
     @PostMapping(value = "bookAdd")//图书入库
     public String bookAdd(Book book){
-        if (bookDao.exists(book.getBookId())==false){
-            bookDao.save(book);
-            return "入库成功!";
-        }else
-            return "指定图书ID已存在，请检查！！";
+        book.setBookInDate(new Date());
+        book.setIsBorrowed("未借");
+        bookDao.save(book);
+        return "入库成功!";
+
     }
 }
