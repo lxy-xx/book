@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface ManagerDao extends JpaRepository<Manager,Integer> {
     Manager findByManagerId(int Id);
+    Manager findManagerByUsernameAndAndPassword(String username,String password);
 }

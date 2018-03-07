@@ -72,14 +72,20 @@ public class InExistence {
         else
             return true;
     }
-//    public boolean bookExist(int Id){
-//        Book book=null;
-//        book=bookDao.findByBookID(Id);
-//        if(book==null){
-//            return  false;
-//
-//        }else {
-//            return  true;
-//        }
-//    }
+
+    public Manager managerExit(String username,String password){
+        Manager manager = null;
+        manager=managerDao.findManagerByUsernameAndAndPassword(username,password);
+        return manager;
+    }
+/*    public boolean bookExist(int Id){
+        Book book=null;
+        book=bookDao.findByBookID(Id);
+        if(book==null){
+            return  false;
+
+        }else {
+            return  true;
+        }
+    }*/
 }
