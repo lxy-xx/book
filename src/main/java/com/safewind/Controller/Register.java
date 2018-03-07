@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * Created by zhh on 2018/2/28.
  */
@@ -25,6 +27,7 @@ public class Register {
       if(false==inExistence.exist(reader.getReaderName()))
           return "该用户已经存在！";//失败界面
       else{
+          reader.setRegDate(new Date());
           readerDao.save(reader);
           return "已成功！";//成功界面
       }

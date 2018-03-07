@@ -57,8 +57,13 @@ public class Select {
 
     @GetMapping(value = "selectBook")
     public Book selectBook(@RequestParam("id") int id) {
-        Book book = bookDao.findByBookID(id);
+        Book book = bookDao.findByBookId(id);
         return book;
 
+    }
+
+    @PostMapping(value = "selectAllBook")
+    public List<Book> selectAllBook(){
+        return bookDao.findAll();
     }
 }

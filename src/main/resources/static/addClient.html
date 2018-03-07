@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图书管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" href="./img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/jquery.dataTables.min.css">
+    <style>
+        body{
+          background:#fff url('./img/background.jpg') no-repeat left top;
+          background-size:100%;
+        }
+        .container{
+            background-color:rgba(255,255,255,0.3);
+            border-radius: 15px;
+            /*color: white;*/
+            margin-top: 100px;
+            padding: 15px;
+        }
+        tbody{
+            background-color:rgba(255,255,255,1);
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript" src="./js/head.js"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-4">
+            <h2>新增借阅者</h2>
+        </div>
+    </div>
+    <br/>
+    <form action="./addBookDo"></form>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">读者姓名</span>
+                <input id="readerName" type="text" class="form-control" placeholder="请输入读者姓名">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">读者性别</span>
+                <input id="readerSex" type="text" class="form-control" placeholder="请输入读者性别">
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">读者类型</span>
+                <input id="readerType" type="text" class="form-control" placeholder="请输入读者类型">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">初始密码</span>
+                <input id="password" type="password" class="form-control" placeholder="请输入初始密码">
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        
+        <div class="col-xs-12">
+            <button class="btn btn-primary btn-lg pull-right" id="submitTry">提交</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="result" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    提交结果
+                </h4>
+            </div>
+            <div class="modal-body" id="content">
+                在这里添加一些文本
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<script type="text/javascript" src="./js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="./js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("table").DataTable({
+              language: {  
+                  "sProcessing": "处理中...",  
+                  "sLengthMenu": "显示 _MENU_ 项结果",  
+                  "sZeroRecords": "没有匹配结果",  
+                  "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",  
+                  "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",  
+                  "sInfoFiltered": "(由 _MAX_ 项结果过滤)",  
+                  "sInfoPostFix": "",  
+                  "sSearch": "搜索:",  
+                  "sUrl": "",  
+                  "sEmptyTable": "表中数据为空",  
+                  "sLoadingRecords": "载入中...",  
+                  "sInfoThousands": ",",  
+                  "oPaginate": {  
+                      "sFirst": "首页",  
+                      "sPrevious": "上页",  
+                      "sNext": "下页",  
+                      "sLast": "末页"  
+                  },  
+                  "oAria": {  
+                      "sSortAscending": ": 以升序排列此列",  
+                      "sSortDescending": ": 以降序排列此列"  
+                  }  
+              }  
+        });
+        $("#submitTry").click(function(event) {
+
+            var readerName = $.trim($("#readerName").val());
+            var readerSex = $.trim($("#readerSex").val());
+            var readerType = $.trim($("#readerType").val());
+            var password = $("#password").val();
+
+
+            if(readerName==""){
+                $("#content").html("读者名称不能为空");
+            }else if(readerSex==""){
+                $("#content").html("读者性别不能为空");
+            }else if(readerType==""){
+                $("#content").html("读者类型不能为空");
+            }else if(password==""){
+                $("#content").html("初始密码不能为空");
+            }else {
+                $.ajax({
+                    url: './readerRegister',
+                    type: 'POST',
+                    data:{
+                        readerName:readerName,
+                        readerSex:readerSex,
+                        readerType:readerType,
+                        password:password,
+                    }
+                })
+                    .done(function (data) {
+                        $("#content").html(data);
+                        console.log(data);
+                    })
+                    .fail(function () {
+                        $("#content").html("网络环境问题，交互失败");
+                        console.log("error");
+                    })
+                    .always(function () {
+                        console.log("complete");
+                    });
+            }
+
+            $('#result').modal('show');
+        });
+    });
+</script>
+</body>
+</html>
