@@ -4,6 +4,7 @@ import com.safewind.Dao.BookDao;
 import com.safewind.Dao.BorrowRecordDao;
 import com.safewind.Dao.ReaderDao;
 import com.safewind.Dao.ReturnRecordDao;
+import com.safewind.Service.BorrowMethod;
 import com.safewind.Service.Fine;
 import com.safewind.model.Book;
 import com.safewind.model.BorrowRecord;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zhh on 2018/3/5.
@@ -29,6 +32,7 @@ public class BorrowAndReturn {
     @Autowired private ReturnRecordDao returnRecordDao;
     @Autowired private ReaderDao readerDao;
     @Autowired private Fine fine;
+    @Autowired private BorrowMethod borrowMethod;
     @Value("${borderTime}")
     private long borderTime;
     @PostMapping(value="borrowBook")
@@ -47,6 +51,13 @@ public class BorrowAndReturn {
         bookDao.save(book);
         return "借阅成功";
     }
+
+    @GetMapping(value="myBorrowBooks")
+    public List<Book> myBooks(HttpSession session){
+        int readerId=((Reader)session.getAttribute("reader")).getReaderId();
+        return borrowMethod.returnMyBooks(readerId);
+    }
+
     @PostMapping(value="returnBook")
     public String returnBook(@RequestParam("bookId") int bookId,
                              HttpSession session ){

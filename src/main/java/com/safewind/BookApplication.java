@@ -1,5 +1,8 @@
 package com.safewind;
 
+import com.safewind.Dao.BorrowRecordDao;
+import com.safewind.model.BorrowRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,7 +14,7 @@ import java.util.Date;
 public class BookApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BookApplication.class, args);
+	SpringApplication.run(BookApplication.class, args);
 		/*SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		try {

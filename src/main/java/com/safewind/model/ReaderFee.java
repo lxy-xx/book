@@ -28,6 +28,9 @@ public class ReaderFee {
             this.borrowDate = borrowDate;
         }
 
+        public ReaderFeePK() {
+        }
+
         public int getBookId() {
             return bookId;
         }

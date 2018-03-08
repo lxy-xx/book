@@ -25,7 +25,7 @@ public class Update {
     @PostMapping(value="readerUpdate")
     public String readerUpdate(Reader reader){
         if(true==inExistence.readerExist(reader.getReaderId())) {
-            readerDao.save(reader);
+            readerDao.updateReaderInformation(reader.getReaderName(),reader.getReaderSex(),reader.getReaderType(),reader.getReaderId());
             return "修改成功！";//修改成功后的页面
         }else
             return "修改失败！请检查信息！";//修改失败后的页面
@@ -41,7 +41,7 @@ public class Update {
     @PostMapping(value = "bookUpdate") //修改图书信息
     public  String bookUpdate(Book book){
         if (true==bookDao.exists(book.getBookId())){
-            bookDao.save(book);
+            bookDao.updateBookInformation(book.getBookName(),book.getBookStyle(),book.getBookAuthor(),book.getBookPub(),book.getBookId());
             return "修改成功";
         }else
             return "修改失败！此书不存在！请检查！";

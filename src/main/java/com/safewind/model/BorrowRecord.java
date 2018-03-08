@@ -56,6 +56,9 @@ public class BorrowRecord {
             this.bookId = bookId;
         }
 
+        public BorrowRecordPK() {
+        }
+
         public int getReaderId() {
             return readerId;
         }

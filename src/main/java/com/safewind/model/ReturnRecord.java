@@ -52,6 +52,9 @@ public class ReturnRecord {
             this.readerName = readerName;
         }
 
+        public ReturnRecordPK() {
+        }
+
         public int getReaderId() {
             return readerId;
         }
