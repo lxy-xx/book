@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-<script type="text/javascript" src="js/head.js"></script> 
+<script type="text/javascript" src="header.js"></script>
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
@@ -100,40 +100,231 @@
     </div>
 </div>
 
+<div class="modal fade" id="changeBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    提交结果
+                </h4>
+            </div>
+            <div class="modal-body" id="content">
 
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input type="hidden" id="bookId" value=""/>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">书籍名称</span>
+                            <input id="bookName" type="text" class="form-control" placeholder="请输入书籍名称">
+                        </div>
+                    </div>
+
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">书籍风格</span>
+                            <input id="bookStyle" type="text" class="form-control" placeholder="请输入书籍风格">
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">书籍作者</span>
+                            <input id="bookAuthor" type="text" class="form-control" placeholder="请输入书籍作者">
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">出版社</span>
+                            <input id="bookPub" type="text" class="form-control" placeholder="请输入出版社">
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+            </div>
+            <div class="modal-footer">
+                <div id="result"></div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="submitTry">提交
+                </button>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+    function fmtDate(obj){
+        var date =  new Date(obj);
+        var y = 1900+date.getYear();
+        var m = "0"+(date.getMonth()+1);
+        var d = "0"+date.getDate();
+        return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+    }
+
+    function changeIndex(bookId) {
+        $("#bookId").val(bookId);
+        $.ajax({
+            url: './selectBook',
+            type: 'POST',
+            data:{
+                id:bookId
+            }
+        })
+                .done(function (data) {
+                    $("#bookId").val(data.bookId);
+                    $("#bookName").val(data.bookName);
+                    $("#bookStyle").val(data.bookStyle);
+                    $("#bookAuthor").val(data.bookAuthor);
+                    $("#bookPub").val(data.bookPub);
+                    console.log("Done");
+                })
+                .fail(function () {
+                    $("#result").html("网络环境问题，交互失败");
+                    console.log("error");
+                })
+                .always(function () {
+                    console.log("complete");
+                });
+        $('#changeBox').modal('show');
+    }
+
+
     $(function(){
+
         $("table").DataTable({
-              language: {  
-                  "sProcessing": "处理中...",  
-                  "sLengthMenu": "显示 _MENU_ 项结果",  
-                  "sZeroRecords": "没有匹配结果",  
-                  "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",  
-                  "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",  
-                  "sInfoFiltered": "(由 _MAX_ 项结果过滤)",  
-                  "sInfoPostFix": "",  
-                  "sSearch": "搜索:",  
-                  "sUrl": "",  
-                  "sEmptyTable": "表中数据为空",  
-                  "sLoadingRecords": "载入中...",  
-                  "sInfoThousands": ",",  
-                  "oPaginate": {  
-                      "sFirst": "首页",  
-                      "sPrevious": "上页",  
-                      "sNext": "下页",  
-                      "sLast": "末页"  
-                  },  
-                  "oAria": {  
-                      "sSortAscending": ": 以升序排列此列",  
-                      "sSortDescending": ": 以降序排列此列"  
-                  }  
-              }  
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            }  ,
+
+            ajax: {
+                type: 'post',
+                url: './selectAllBook',
+                dataSrc: ''
+            },
+            columns: [
+                { data: 'bookId' },
+                { data: 'bookName' },
+                { data: 'bookStyle' },
+                { data: 'bookAuthor' },
+                { data: 'bookPub' },
+                { data: 'bookPubDate' },
+                { data: 'bookInDate' },
+                { data: 'isBorrowed' },
+                { data: null }
+
+            ] ,
+            "columnDefs" : [ {
+                // 定义操作列,######以下是重点########
+                "targets" : 8,//操作按钮目标列
+                "data" : null,
+                "render" : function(data, type,row) {
+                    var id = row.bookId;
+                    var html = "<a class='btn btn-default btn-xs'  onclick='changeIndex("+id+")'><i class='fa fa-times' ></i> 更改</a>";
+
+                    return html;
+                }
+            },{
+                "targets" : 5,//操作按钮目标列
+                "render" : function(data, type,row) {
+                    var html = fmtDate(data);
+                    return html;
+                }
+            },{
+                "targets" : 6,//操作按钮目标列
+                "render" : function(data, type,row) {
+                    var html = fmtDate(data);
+                    return html;
+                }
+            } ]
+
         });
+
+        $("#submitTry").click(function(event) {
+
+            var bookId = $.trim($("#bookId").val());
+            var bookName = $.trim($("#bookName").val());
+            var bookStyle = $.trim($("#bookStyle").val());
+            var bookAuthor = $.trim($("#bookAuthor").val());
+            var bookPub = $.trim($("#bookPub").val());
+
+            if(bookName==""){
+                $("#content").html("书籍名称不能为空");
+            }else if(bookStyle==""){
+                $("#content").html("书籍风格不能为空");
+            }else if(bookAuthor==""){
+                $("#content").html("书籍作者不能为空");
+            }else if(bookPub==""){
+                $("#content").html("出版社不能为空");
+            }else {
+                $.ajax({
+                    url: './bookUpdate',
+                    type: 'POST',
+                    data:{
+                        bookId:bookId,
+                        bookName:bookName,
+                        bookStyle:bookStyle,
+                        bookAuthor:bookAuthor,
+                        bookPub:bookPub
+                    }
+                })
+                        .done(function (data) {
+                            $("#result").html(data);
+                            console.log(data);
+                            setTimeout(function(){
+                                location.reload();
+                            },2000);
+                        })
+                        .fail(function () {
+                            $("#result").html("网络环境问题，交互失败");
+                            console.log("error");
+                        })
+                        .always(function () {
+                            console.log("complete");
+                        });
+            }
+
+
+
+        });
+
     });
 </script>
 </body>

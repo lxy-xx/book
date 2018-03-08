@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-<script type="text/javascript" src="./js/head.js"></script>
+<script type="text/javascript" src="header.js"></script>
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
@@ -67,13 +67,73 @@
     </div>
 </div>
 
+<div class="modal fade" id="result" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    提交结果
+                </h4>
+            </div>
+            <div class="modal-body" id="content">
+                在这里添加一些文本
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
 
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 <script type="text/javascript" src="./js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="./js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+    function fmtDate(obj){
+        var date =  new Date(obj);
+        var y = 1900+date.getYear();
+        var m = "0"+(date.getMonth()+1);
+        var d = "0"+date.getDate();
+        return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+    }
+    function bookBorrow(id) {
+        if($("#flag").val()=="-1"){
+            window.location.href = 'login.html';
+        }else {
+            $.ajax({
+                url: './borrowBook',
+                type: 'POST',
+                data: {
+                    bookId: id
+                }
+            })
+                    .done(function (data) {
+                        $("#content").html(data);
+                        console.log(data);
+                    })
+                    .fail(function () {
+                        $("#content").html("网络环境问题，交互失败");
+                        console.log("error");
+                    })
+                    .always(function () {
+                        console.log("complete");
+                    });
+            $('#result').modal('show');
+
+            setTimeout(function(){
+                location.reload();
+            },2000);
+        }
+    }
+
+
+
     $(function(){
 
         $("table").DataTable({
@@ -124,11 +184,23 @@
                   "targets" : 8,//操作按钮目标列
                   "data" : null,
                   "render" : function(data, type,row) {
-                                var id = row.bookId;
-                                var html = "<a href='bookBorrow?id="+id+"'  class='btn btn-default btn-xs'  ><i class='fa fa-times'></i> 借阅</a>"
-                                
-                                return html;
-                            }
+                        var id = row.bookId;
+                        var html = "<a class='btn btn-default btn-xs' onclick='bookBorrow("+id+")' ><i class='fa fa-times'></i> 借阅</a>";
+
+                        return html;
+                  }
+              },{
+                  "targets" : 5,//操作按钮目标列
+                  "render" : function(data, type,row) {
+                      var html = fmtDate(data);
+                      return html;
+                  }
+              },{
+                  "targets" : 6,//操作按钮目标列
+                  "render" : function(data, type,row) {
+                      var html = fmtDate(data);
+                      return html;
+                  }
               } ]
               
         });

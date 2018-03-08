@@ -19,7 +19,7 @@ public class Add {
     public String bookAdd(Book book){
         System.out.println(book);
         book.setBookInDate(new Date());
-        book.setIsBorrowed("未借");
+        book.setIsBorrowed("未借阅");
         bookDao.save(book);
         return "入库成功!";
 

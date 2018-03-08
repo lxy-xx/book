@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-<script type="text/javascript" src="js/head.js"></script>
+<script type="text/javascript" src="header.js"></script>
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
@@ -45,39 +45,7 @@
                      </tr> 
                     </thead> 
                     <tbody>
-                        <tr> 
-                          <th>123</th> 
-                          <th>13</th> 
-                          <th>456</th> 
-                          <th>768</th>
-                          <th>3154.4</th>
-                          <th>123</th>
-                          <th></th>
-                          <th></th>
-                          <th width="10%"><button class="btn btn-primary">借书</button></th>
-                        </tr> 
-                        <tr> 
-                          <th>123</th> 
-                          <th>13</th> 
-                          <th>456</th> 
-                          <th>768</th>
-                          <th>3154.4</th>
-                          <th>123</th>
-                          <th></th>
-                          <th></th>
-                          <th><button class="btn btn-primary" disabled="disabled">借书</button></th>
-                        </tr> 
-                        <tr> 
-                          <th>123</th> 
-                          <th>13</th> 
-                          <th>456</th> 
-                          <th>768</th>
-                          <th>3154.4</th>
-                          <th>123</th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                        </tr> 
+
 
                     </tbody> 
                     <tfoot> 
@@ -107,6 +75,38 @@
 <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+    function fmtDate(obj){
+        var date =  new Date(obj);
+        var y = 1900+date.getYear();
+        var m = "0"+(date.getMonth()+1);
+        var d = "0"+date.getDate();
+        return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+    }
+    function returnBook(id) {
+        $.ajax({
+            url: './returnBook',
+            type: 'POST',
+            data: {
+                bookId: id
+            }
+        })
+                .done(function (data) {
+                    $("#content").html(data);
+                    console.log(data);
+                })
+                .fail(function () {
+                    $("#content").html("网络环境问题，交互失败");
+                    console.log("error");
+                })
+                .always(function () {
+                    console.log("complete");
+                });
+        $('#result').modal('show');
+        setTimeout(function(){
+            location.reload();
+        },2000);
+    }
+
     $(function(){
         $("table").DataTable({
               language: {  
@@ -131,7 +131,47 @@
                   "oAria": {  
                       "sSortAscending": ": 以升序排列此列",  
                       "sSortDescending": ": 以降序排列此列"  
-                  }  
+                  }  ,
+                  ajax: {
+                      type: 'post',
+                      url: './selectAllBook',
+                      dataSrc: ''
+                  },
+                  columns: [
+                      { data: 'bookId' },
+                      { data: 'bookName' },
+                      { data: 'bookStyle' },
+                      { data: 'bookAuthor' },
+                      { data: 'bookPub' },
+                      { data: 'bookPubDate' },
+                      { data: 'bookInDate' },
+                      { data: 'isBorrowed' },
+                      { data: null }
+
+                  ] ,
+                  "columnDefs" : [ {
+                      // 定义操作列,######以下是重点########
+                      "targets" : 8,//操作按钮目标列
+                      "data" : null,
+                      "render" : function(data, type,row) {
+                          var id = row.bookId;
+                          var html = "<a class='btn btn-default btn-xs' onclick='returnBook("+id+")' ><i class='fa fa-times'></i> 借阅</a>";
+
+                          return html;
+                      }
+                  },{
+                      "targets" : 5,//操作按钮目标列
+                      "render" : function(data, type,row) {
+                          var html = fmtDate(data);
+                          return html;
+                      }
+                  },{
+                      "targets" : 6,//操作按钮目标列
+                      "render" : function(data, type,row) {
+                          var html = fmtDate(data);
+                          return html;
+                      }
+                  } ]
               }  
         });
     });

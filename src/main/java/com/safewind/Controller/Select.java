@@ -41,21 +41,21 @@ public class Select {
         return managerList;
     }
 
-    @GetMapping(value = "selectReader")
+    @PostMapping(value = "selectReader")
     public Reader selectReader(@RequestParam("id") int id) {
         Reader reader = readerDao.findByReaderId(id);
         reader.setPassword(null);
         return reader;
     }
 
-    @GetMapping(value = "selectManager")
+    @PostMapping(value = "selectManager")
     public Manager selectManager(@RequestParam("id") int id) {
         Manager manager = managerDao.findByManagerId(id);
         manager.setPassword(null);
         return manager;
     }
 
-    @GetMapping(value = "selectBook")
+    @PostMapping(value = "selectBook")
     public Book selectBook(@RequestParam("id") int id) {
         Book book = bookDao.findByBookId(id);
         return book;

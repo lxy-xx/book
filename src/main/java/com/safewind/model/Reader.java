@@ -18,6 +18,8 @@ public class Reader {
     private Date regDate;
     private String password;
 
+
+    @Column(updatable=false)
     public String getPassword() {
         return password;
     }
@@ -60,7 +62,7 @@ public class Reader {
     public void setReaderType(String readerType) {
         this.readerType = readerType;
     }
-
+    @Column(updatable=false)
     public Date getRegDate() {
         return regDate;
     }

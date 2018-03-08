@@ -30,46 +30,27 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-4">
-            <h2>图书入库</h2>
+            <h2>登录</h2>
         </div>
     </div>
     <br/>
-    <form action="./addBookDo"></form>
+
     <div class="row">
         <div class="col-xs-6">
             <div class="input-group input-group-lg">
-                <span class="input-group-addon">书籍名称</span>
-                <input id="bookName" type="text" class="form-control" placeholder="请输入书籍名称">
+                <span class="input-group-addon">用户名</span>
+                <input id="username" type="text" class="form-control" placeholder="请输入用户名">
             </div>
         </div>
-        <div class="col-xs-6">
-            <div class="input-group input-group-lg">
-                <span class="input-group-addon">书籍类别</span>
-                <input id="bookStyle" type="text" class="form-control" placeholder="请输入书籍类别">
-            </div>
-        </div>
+
     </div>
     <br/>
+
     <div class="row">
         <div class="col-xs-6">
             <div class="input-group input-group-lg">
-                <span class="input-group-addon">书籍作者</span>
-                <input id="bookAuthor" type="text" class="form-control" placeholder="请输入书籍作者">
-            </div>
-        </div>
-        <div class="col-xs-6">
-            <div class="input-group input-group-lg">
-                <span class="input-group-addon">书籍出版社</span>
-                <input id="bookPub" type="text" class="form-control" placeholder="请输入书籍出版社">
-            </div>
-        </div>
-    </div>
-    <br/>
-    <div class="row">
-        <div class="col-xs-6">
-            <div class="input-group input-group-lg">
-                <span class="input-group-addon">出版日期</span>
-                <input id="bookPubDate" type="text" class="form-control" placeholder="请输入书籍出版日期">
+                <span class="input-group-addon">密码</span>
+                <input id="password" type="password" class="form-control" placeholder="请输入密码">
             </div>
         </div>
         <div class="col-xs-6">
@@ -146,45 +127,38 @@
 
         $("#submitTry").click(function(event) {
 
-            var bookName = $.trim($("#bookName").val());
-            var bookAuthor = $.trim($("#bookAuthor").val());
-            var bookStyle = $.trim($("#bookStyle").val());
-            var bookPub = $.trim($("#bookPub").val());
-            var bookPubDate = $.trim($("#bookPubDate").val());
+            var username = $.trim($("#username").val());
+            var password = $("#password").val();
 
-            if(bookName==""){
-                $("#content").html("书籍名称不能为空");
-            }else if(bookAuthor==""){
-                $("#content").html("书籍作者不能为空");
-            }else if(bookStyle==""){
-                $("#content").html("书籍类别不能为空");
-            }else if(bookPub==""){
-                $("#content").html("书籍出版社不能为空");
-            }else if(bookPubDate==""){
-                $("#content").html("出版日期不能为空");
+            if(username==""){
+                $("#content").html("用户名不能为空");
+            }else if(password==""){
+                $("#content").html("密码不能为空");
             }else {
                 $.ajax({
-                    url: './bookAdd',
+                    url: './loginDo',
                     type: 'POST',
                     data:{
-                        bookName:bookName,
-                        bookAuthor:bookAuthor,
-                        bookStyle:bookStyle,
-                        bookPub:bookPub,
-                        bookPubDate:bookPubDate
+                        username:username,
+                        password:password
                     }
                 })
-                        .done(function (data) {
-                            $("#content").html(data);
-                            console.log(data);
-                        })
-                        .fail(function () {
-                            $("#content").html("网络环境问题，交互失败");
-                            console.log("error");
-                        })
-                        .always(function () {
-                            console.log("complete");
-                        });
+                .done(function (data) {
+                    if(data!="-1") {
+                        $("#content").html("登录成功");
+                        console.log("登录成功");
+                        window.location.href = data;
+                    }else{
+                        $("#content").html("用户名或密码错误");
+                    }
+                })
+                .fail(function () {
+                    $("#content").html("网络环境问题，交互失败");
+                    console.log("error");
+                })
+                .always(function () {
+                    console.log("complete");
+                });
             }
 
             $('#result').modal('show');

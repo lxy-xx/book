@@ -41,7 +41,6 @@ public class Update {
     @PostMapping(value = "bookUpdate") //修改图书信息
     public  String bookUpdate(Book book){
         if (true==bookDao.exists(book.getBookId())){
-            bookDao.delete(book.getBookId());
             bookDao.save(book);
             return "修改成功";
         }else
