@@ -2,25 +2,27 @@
 <html>
 <head>
     <title>图书管理系统</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">
     <style>
-        body{
-          background:#fff url('img/background.jpg') no-repeat left top;
-          background-size:100%;
+        body {
+            background: #fff url('img/background.jpg') no-repeat left top;
+            background-size: 100%;
         }
-        .container{
-            background-color:rgba(255,255,255,0.3);
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.3);
             border-radius: 15px;
             /*color: white;*/
             margin-top: 100px;
             padding: 15px;
         }
-        tbody{
-            background-color:rgba(255,255,255,1);
+
+        tbody {
+            background-color: rgba(255, 255, 255, 1);
         }
     </style>
 </head>
@@ -29,58 +31,79 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <div >
-                <table id="bookTable" class="table table-bordered table-hover table-control"> 
-                    <thead> 
-                     <tr> 
-                      <th width="10%">书籍编号</th> 
-                      <th width="15%">书籍名称</th> 
-                      <th width="10%">书籍类别</th> 
-                      <th width="10%">书籍作者</th>
-                      <th width="15%">出版社名称</th>
-                      <th width="10%">出版日期</th>
-                      <th width="10%">登记日期</th>
-                      <th width="10%">是否被借出</th>
-                      <th width="10%">操作</th>
-                     </tr> 
-                    </thead> 
+            <div>
+                <table id="bookTable" class="table table-bordered table-hover table-control">
+                    <thead>
+                    <tr>
+                        <th width="10%">书籍编号</th>
+                        <th width="15%">书籍名称</th>
+                        <th width="10%">书籍类别</th>
+                        <th width="10%">书籍作者</th>
+                        <th width="15%">出版社名称</th>
+                        <th width="10%">出版日期</th>
+                        <th width="10%">登记日期</th>
+                        <th width="10%">是否被借出</th>
+                        <th width="10%">操作</th>
+                    </tr>
+                    </thead>
                     <tbody>
 
 
-                    </tbody> 
-                    <tfoot> 
-                     <tr> 
-                      <th>书籍编号</th> 
-                      <th>书籍名称</th> 
-                      <th>书籍类别</th> 
-                      <th>书籍作者</th>
-                      <th>出版社名称</th>
-                      <th>出版日期</th>
-                      <th>登记日期</th>
-                      <th>是否被借出</th>
-                      <th>操作</th>
-                     </tr> 
-                    </tfoot> 
-                    <!-- tbody是必须的 --> 
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>书籍编号</th>
+                        <th>书籍名称</th>
+                        <th>书籍类别</th>
+                        <th>书籍作者</th>
+                        <th>出版社名称</th>
+                        <th>出版日期</th>
+                        <th>登记日期</th>
+                        <th>是否被借出</th>
+                        <th>操作</th>
+                    </tr>
+                    </tfoot>
+                    <!-- tbody是必须的 -->
                 </table>
             </div>
         </div>
     </div>
 </div>
 
+<div class="modal fade" id="result" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    提交结果
+                </h4>
+            </div>
+            <div class="modal-body" id="content">
+                在这里添加一些文本
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
 
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-    function fmtDate(obj){
-        var date =  new Date(obj);
-        var y = 1900+date.getYear();
-        var m = "0"+(date.getMonth()+1);
-        var d = "0"+date.getDate();
-        return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+    function fmtDate(obj) {
+        var date = new Date(obj);
+        var y = 1900 + date.getYear();
+        var m = "0" + (date.getMonth() + 1);
+        var d = "0" + date.getDate();
+        return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length);
     }
     function returnBook(id) {
         $.ajax({
@@ -102,77 +125,83 @@
                     console.log("complete");
                 });
         $('#result').modal('show');
-        setTimeout(function(){
-            location.reload();
-        },2000);
+
+
+
     }
 
-    $(function(){
+    $(function () {
+        $('#result').on('hidden.bs.modal', function () {
+            location.reload();
+        })
+
+
         $("table").DataTable({
-              language: {  
-                  "sProcessing": "处理中...",  
-                  "sLengthMenu": "显示 _MENU_ 项结果",  
-                  "sZeroRecords": "没有匹配结果",  
-                  "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",  
-                  "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",  
-                  "sInfoFiltered": "(由 _MAX_ 项结果过滤)",  
-                  "sInfoPostFix": "",  
-                  "sSearch": "搜索:",  
-                  "sUrl": "",  
-                  "sEmptyTable": "表中数据为空",  
-                  "sLoadingRecords": "载入中...",  
-                  "sInfoThousands": ",",  
-                  "oPaginate": {  
-                      "sFirst": "首页",  
-                      "sPrevious": "上页",  
-                      "sNext": "下页",  
-                      "sLast": "末页"  
-                  },  
-                  "oAria": {  
-                      "sSortAscending": ": 以升序排列此列",  
-                      "sSortDescending": ": 以降序排列此列"  
-                  }  ,
-                  ajax: {
-                      type: 'post',
-                      url: './selectAllBook',
-                      dataSrc: ''
-                  },
-                  columns: [
-                      { data: 'bookId' },
-                      { data: 'bookName' },
-                      { data: 'bookStyle' },
-                      { data: 'bookAuthor' },
-                      { data: 'bookPub' },
-                      { data: 'bookPubDate' },
-                      { data: 'bookInDate' },
-                      { data: 'isBorrowed' },
-                      { data: null }
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            ajax: {
+                type: 'post',
+                url: './myBorrowBooks',
+                dataSrc: ''
+            },
+            columns: [
+                {data: 'bookId'},
+                {data: 'bookName'},
+                {data: 'bookStyle'},
+                {data: 'bookAuthor'},
+                {data: 'bookPub'},
+                {data: 'bookPubDate'},
+                {data: 'bookInDate'},
+                {data: 'isBorrowed'},
+                {data: null}
 
-                  ] ,
-                  "columnDefs" : [ {
-                      // 定义操作列,######以下是重点########
-                      "targets" : 8,//操作按钮目标列
-                      "data" : null,
-                      "render" : function(data, type,row) {
-                          var id = row.bookId;
-                          var html = "<a class='btn btn-default btn-xs' onclick='returnBook("+id+")' ><i class='fa fa-times'></i> 借阅</a>";
+            ],
+            "columnDefs": [{
+                // 定义操作列,######以下是重点########
+                "targets": 8,//操作按钮目标列
+                "data": null,
+                "render": function (data, type, row) {
+                    var id = row.bookId;
+                    var html = "<a class='btn btn-default btn-xs' onclick='returnBook(" + id + ")' ><i class='fa fa-times'></i> 还书</a>";
 
-                          return html;
-                      }
-                  },{
-                      "targets" : 5,//操作按钮目标列
-                      "render" : function(data, type,row) {
-                          var html = fmtDate(data);
-                          return html;
-                      }
-                  },{
-                      "targets" : 6,//操作按钮目标列
-                      "render" : function(data, type,row) {
-                          var html = fmtDate(data);
-                          return html;
-                      }
-                  } ]
-              }  
+                    return html;
+                }
+            }, {
+                "targets": 5,//操作按钮目标列
+                "render": function (data, type, row) {
+                    var html = fmtDate(data);
+                    return html;
+                }
+            }, {
+                "targets": 6,//操作按钮目标列
+                "render": function (data, type, row) {
+                    var html = fmtDate(data);
+                    return html;
+                }
+            }]
+
         });
     });
 </script>

@@ -185,7 +185,14 @@
                   "data" : null,
                   "render" : function(data, type,row) {
                         var id = row.bookId;
-                        var html = "<a class='btn btn-default btn-xs' onclick='bookBorrow("+id+")' ><i class='fa fa-times'></i> 借阅</a>";
+                        var flag = row.isBorrowed;
+                        var html = "";
+                        if(flag=="已借阅"){
+
+                        }else{
+                            html = "<a class='btn btn-default btn-xs' onclick='bookBorrow("+id+")' ><i class='fa fa-times'></i> 借阅</a>";
+
+                        }
 
                         return html;
                   }

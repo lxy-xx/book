@@ -35,6 +35,8 @@ public class BorrowAndReturn {
     @Autowired private BorrowMethod borrowMethod;
     @Value("${borderTime}")
     private long borderTime;
+    @Value("${Fee}")
+    private String Fee;
     @PostMapping(value="borrowBook")
     public String borrow(@RequestParam("bookId") int bookId,
                          HttpSession session ){
@@ -52,7 +54,7 @@ public class BorrowAndReturn {
         return "借阅成功";
     }
 
-    @GetMapping(value="myBorrowBooks")
+    @PostMapping(value="myBorrowBooks")
     public List<Book> myBooks(HttpSession session){
         int readerId=((Reader)session.getAttribute("reader")).getReaderId();
         return borrowMethod.returnMyBooks(readerId);
@@ -80,8 +82,10 @@ public class BorrowAndReturn {
         long timeDifference=returnDate.getTime()-borrowDate.getTime();
         if(timeDifference>borderTime){
             fine.dealWith(bookId,readerId,borrowDate);
-            return "逾期，已罚款！";
+            return "逾期，已罚款"+Fee+"！";
         }
+        BorrowRecord.BorrowRecordPK borrowRecordPK=new BorrowRecord.BorrowRecordPK(readerId,bookId);
+        borrowRecordDao.delete(borrowRecordPK);
 
         return "还书成功！";
     }
